@@ -1,0 +1,9 @@
+Changes
+lib/Simple/SAX/Serializer.pm
+lib/Simple/SAX/Serializer/Parser.pm
+lib/Simple/SAX/Serializer/Element.pm
+Makefile.PL
+MANIFEST
+README
+t/xml/xml.t
+META.yml                                 Module meta-data (added by MakeMaker)
