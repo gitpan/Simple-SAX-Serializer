@@ -5,7 +5,7 @@ use strict;
 use vars qw($VERSION);
 use Carp 'confess';
 
-$VERSION = 0.01;
+$VERSION = 0.02;
 
 use Abstract::Meta::Class ':all';
 
@@ -203,7 +203,7 @@ L<Simple::SAX::Serializer::Parser>
 
 =head1 AUTHOR
 
-Adrian Witas, E<lt>adrian@webapp.strefa.pl</gt>
+Adrian Witas, adrian@webapp.strefa.pl
 
 See also 
 

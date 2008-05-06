@@ -4,14 +4,14 @@ use warnings;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = 0.01;
+$VERSION = 0.02;
 
 use base 'XML::SAX::Base';
 use Simple::SAX::Serializer::Element;
 
 =head1 NAME
 
-Simple::SAX::Serializer::Parser
+Simple::SAX::Serializer::Parser - Xml parser
 
 =head1 DESCRIPTION
 
@@ -142,7 +142,7 @@ L<Simple::SAX::Serializer>
 
 =head1 AUTHOR
 
-Adrian Witas, E<lt>adrian@webapp.strefa.pl</gt>
+Adrian Witas, adrian@webapp.strefa.pl
 
 See also 
 

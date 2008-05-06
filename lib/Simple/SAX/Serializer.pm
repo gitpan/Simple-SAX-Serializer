@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = 0.01;
+$VERSION = 0.02;
 
 use Abstract::Meta::Class ':all';
 use base 'XML::SAX::Base';
@@ -21,7 +21,7 @@ BEGIN {
 
 =head1 NAME
 
-Simple::SAX::Serializer
+Simple::SAX::Serializer - Simple XML serializer
 
 =head1 DESCRIPTION
 
@@ -41,6 +41,7 @@ Represents xml serializer class,
 
     $xml->handler('root', sub {
         my ($self, $element) = @_;
+          $element->validate_attributes(['dummy'], {attr2 => 'default_value'});
           Root->new(%{$element->attributes}, children => $element->children_result);
     });
 
@@ -174,7 +175,7 @@ L<XML::LibXML::SAX>
 
 =head1 AUTHOR
 
-Adrian Witas, E<lt>adrian@webapp.strefa.pl</gt>
+Adrian Witas, adrian@webapp.strefa.pl
 
 See also 
 
