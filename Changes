@@ -1,5 +1,8 @@
 Revision history for Perl extension Simple::SAX::Serializer.
 
+0.03  Sat May 18 2008
+    - added Simple::SAX::Serializer::Handler  
+
 0.02  Tue May 06 2008
     -  pod documentation fix
 

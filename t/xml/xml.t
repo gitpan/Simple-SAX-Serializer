@@ -53,9 +53,6 @@ XML
     isa_ok($xml, $class);
     
     
-    
-    
-    
     $xml->handler('child_a', sub {
         my ($self, $element, $parent) = @_;
         my $attributes = $element->attributes;
@@ -137,7 +134,7 @@ XML
         my $attributes = $element->attributes;
         my $children_result = $parent->children_array_result;
         push @$children_result, $element->name, [%$attributes];
-    });    
+    });
 
     $xml->handler('root', sub {
         my ($self, $element) = @_;
@@ -157,10 +154,4 @@ XML
             element => [grid_with => 2, attr => 3]]
         ], 'should have serialzed data structure');
 }
-
-
-
-
-
-
 

@@ -5,7 +5,7 @@ use strict;
 use vars qw($VERSION);
 use Carp 'confess';
 
-$VERSION = 0.02;
+$VERSION = 0.03;
 
 use Abstract::Meta::Class ':all';
 
@@ -141,14 +141,16 @@ sub set_children_result {
 
 =item value
 
-Return element's value.
+Return element's value. Takes optionally normalise spaces flag.
 
 =cut
 
 sub value {
-    my ($self) = @_;
+    my ($self, $normailise_spaces) = @_;
     my $node = $self->node;
-    $node->[-1]
+    my $result = $node->[-1];
+    $result =~ s/^\s+|\s+$//sg if defined($result) && $normailise_spaces;
+    $result;
 }
 
 
@@ -200,6 +202,7 @@ the Perl README file.
 
 L<Simple::SAX::Serializer>
 L<Simple::SAX::Serializer::Parser>
+L<Simple::SAX::Handler>
 
 =head1 AUTHOR
 

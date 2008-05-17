@@ -1,4 +1,4 @@
-Simple/SAX/Serializer version 0.02
+Simple/SAX/Serializer version 0.03
 ===========================
     Simple sax serialization interface.
 
@@ -17,8 +17,6 @@ DEPENDENCIES
 This module requires these other modules and libraries:
 
   Abstract::Meta::Class 
-  DBIx::Connection
-  Simple::SAX::Serializer
 
 COPYRIGHT AND LICENCE
 

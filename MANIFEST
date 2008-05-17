@@ -2,6 +2,7 @@ Changes
 lib/Simple/SAX/Serializer.pm
 lib/Simple/SAX/Serializer/Parser.pm
 lib/Simple/SAX/Serializer/Element.pm
+lib/Simple/SAX/Serializer/Handler.pm
 Makefile.PL
 MANIFEST
 README
