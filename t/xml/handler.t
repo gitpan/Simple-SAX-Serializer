@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Cwd;
 
-use Test::More tests => 10;
+use Test::More tests => 11;
 my $class;
 
 BEGIN{
@@ -234,3 +234,23 @@ XML
     my $result = $xml->parse_string($xml_content);
     is_deeply($result, Root->new(object1 => [Object1->new(attr1 => 1),Object1->new(attr1 => 2)]), 'should have hash_of_object_array_handler');
 }
+
+
+{
+my $xml_content = <<XML;
+<?xml version="1.0"?>
+<root>
+    <object1 attr1="1" />
+    <object1 attr1="2" />
+</root>
+XML
+
+    my $xml = Simple::SAX::Serializer->new;
+
+    $xml->handler('object1', hash_of_array_handler(['attr1']));
+    $xml->handler('root', root_object_handler('Root'));
+    
+    my $result = $xml->parse_string($xml_content);
+    is_deeply($result, Root->new(object1 => [{attr1 => 1}, {attr1 => 2}]), 'should have hash_of_object_array_handler');
+}
+

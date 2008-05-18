@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = 0.02;
+$VERSION = 0.03;
 
 use base 'XML::SAX::Base';
 use Simple::SAX::Serializer::Element;
@@ -124,6 +124,17 @@ sub end_element {
 }
 
 
+=item root_args
+
+Returns parse parameters.
+$xml->parse_string($xml_content, {root_param1 => 1, root_param2 => 2;});
+
+=cut
+
+sub root_args {
+    my ($self) = @_;
+    $self->{root_args} ||= {};
+}
 1;
 
 __END__

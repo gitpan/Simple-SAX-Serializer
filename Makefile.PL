@@ -10,6 +10,7 @@ WriteMakefile(
 	'XML::SAX'  		  => 0,
 	'Carp'			  => 0,
     },
+    test	 => { TESTS => 't/xml/*.t'},
     dist         => { COMPRESS => 'gzip', SUFFIX => 'gz' },
     clean        => { FILES => 'MANIFEST.bak' },
 );

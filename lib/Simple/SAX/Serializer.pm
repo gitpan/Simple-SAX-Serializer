@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = 0.02;
+$VERSION = 0.03;
 
 use Abstract::Meta::Class ':all';
 use base 'XML::SAX::Base';
@@ -88,8 +88,8 @@ Runs the parser and returns result, xml as file
 =cut
 
 sub parse_file {
-    my ($self, $file) = @_;
-    $self->parse('file', $file);
+    my $self = shift;
+    $self->parse('file', @_);
 }
 
 
@@ -100,7 +100,7 @@ Runs the parser and returns result
 =cut
 
 sub parse {
-    my ($self, $input_type, $xml) = @_;
+    my ($self, $input_type, $xml, $args) = @_;
     my $parse_method = "parse_$input_type";
     my $handler = Simple::SAX::Serializer::Parser->new;
     $handler->{parser} = $self;
@@ -108,6 +108,7 @@ sub parse {
     if($input_type eq 'file') {
         die "file $xml doesn't exists" unless -e $xml;
     }
+    $handler->{root_args} = $args;
     $parser->$parse_method($xml);
     $handler->{result};
 }

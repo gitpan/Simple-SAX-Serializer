@@ -5,9 +5,9 @@ use warnings;
 use vars qw(@EXPORT_OK %EXPORT_TAGS $VERSION);
 use base 'Exporter';
 
-$VERSION = 0.01;
+$VERSION = 0.02;
 
-@EXPORT_OK = qw(array_handler array_of_objects_handler hash_handler hash_item_of_child_value_handler hash_of_object_array_handler ignore_node_handler root_object_handler object_handler custom_array_handler);
+@EXPORT_OK = qw(array_handler array_of_objects_handler hash_handler hash_item_of_child_value_handler hash_of_object_array_handler hash_of_array_handler ignore_node_handler root_object_handler object_handler custom_array_handler);
 %EXPORT_TAGS = (all => \@EXPORT_OK);
 
 
@@ -37,6 +37,7 @@ array_of_objects_handler
 hash_handler
 hash_item_of_child_value_handler
 hash_of_object_array_handler
+hash_of_array_handler
 ignore_node_handler
 custom_array_handler
 object_handler
@@ -238,6 +239,47 @@ sub hash_of_object_array_handler {
 }
 
 
+=item hash_of_array_handler
+
+Returns handler for transforming nodes attribute into array of the hash items, that
+is stored as hash item of the parent node.
+Takes array ref of the required attributes, hash_ref of the optional attributes,
+storage key to the array(by default the element name).
+
+    my $xml_content = <<XML;
+    <?xml version="1.0"?>
+    <root>
+        <object1 attr1="1" />
+        <object1 attr1="2" />
+    </root>
+    XML
+
+    my $xml = Simple::SAX::Serializer->new;
+
+    $xml->handler('object1', hash_of_array_handler(['attr1']));
+    $xml->handler('root', root_object_handler('Root'));
+
+    my $result = $xml->parse_string($xml_content);
+    #converts result to 
+    Root->new(object1 => [{attr1 => 1}, {attr1 => 2}]);
+
+=cut
+
+sub hash_of_array_handler {
+    my ($required_attributes, $optional_attributes, $parent_key) = @_;
+    sub {
+        my ($self, $element, $parent) = @_;
+        $element->validate_attributes($required_attributes, $optional_attributes)
+            if ($required_attributes || $optional_attributes);
+        my $children_result = $element->children_result || {};
+        my $attributes = $element->attributes;
+        my $result = $parent->children_hash_result;
+        my $key = $parent_key || $element->name;
+        my $array = $result->{$key} ||= [];
+        push @$array, {%$attributes, %$children_result};
+    }
+}
+
 
 =item hash_handler
 
@@ -382,6 +424,7 @@ sub root_object_handler {
     if (ref($object_constructor) eq 'CODE') {
         $result = sub {
             my ($self, $element, $parent) = @_;
+            my $args = $self->root_args;
             $element->validate_attributes($required_attributes, $optional_attributes)
                 if ($required_attributes || $optional_attributes);
             my $attributes = $element->attributes;
@@ -389,12 +432,14 @@ sub root_object_handler {
             my $result = $object_constructor->(
                     %$attributes,
                     %$children_result,
+                    %$args
                 );
             $code ? $code->($result) : $result;
         }
     } else {
         $result = sub {
             my ($self, $element, $parent) = @_;
+            my $args = $self->root_args;
             $element->validate_attributes($required_attributes, $optional_attributes)
                 if ($required_attributes || $optional_attributes);
             my $attributes = $element->attributes;
@@ -402,6 +447,7 @@ sub root_object_handler {
             my $result = $object_constructor->new(
                 %$attributes,
                 %$children_result,
+                %$args
             );
             $code ? $code->($result) : $result;
         }

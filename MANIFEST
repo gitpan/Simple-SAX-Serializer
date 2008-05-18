@@ -7,4 +7,5 @@ Makefile.PL
 MANIFEST
 README
 t/xml/xml.t
+t/xml/handler.t
 META.yml                                 Module meta-data (added by MakeMaker)

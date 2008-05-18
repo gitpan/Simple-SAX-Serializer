@@ -2,7 +2,7 @@ use strict;
 use warnings;
 use Cwd;
 
-use Test::More tests => 17;
+use Test::More tests => 19;
 my $class;
 
 BEGIN{
@@ -155,3 +155,49 @@ XML
         ], 'should have serialzed data structure');
 }
 
+
+
+#root args
+
+{
+    
+    my $xml_content = <<XML;
+<?xml version="1.0"?>
+<root attr1="1">
+ <child attr="1"  />
+</root>
+XML
+
+    my $xml = $class->new;
+    isa_ok($xml, $class);
+
+    $xml->handler('*', sub {
+        my ($self, $element, $parent) = @_;
+        my $attributes = $element->attributes;
+        my $children_result = $parent->children_array_result;
+        push @$children_result, $element->name, [%$attributes];
+    });
+
+    $xml->handler('root', sub {
+        my ($self, $element) = @_;
+        $element->validate_attributes(["attr1"], {attr2 => 1});
+        my $attributes = $element->attributes;
+        my $children_result = $element->children_result;
+        my $args = $self->root_args;
+        {
+         prop => $attributes,
+         children => $children_result,
+         %$args
+        };
+    });
+
+    my $result = $xml->parse('string', $xml_content, {root_param1 => 1, root_param2 => 2});
+    is_deeply($result, {
+        prop => { 'attr2' => 1, 'attr1' => '1' },
+        children => [ 'child', [ 'attr', '1' ]],
+        root_param1 => 1,
+        root_param2 => 2,}, 'should have root args'
+    );
+    
+
+}
