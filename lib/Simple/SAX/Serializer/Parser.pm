@@ -141,7 +141,7 @@ __END__
 
 =back
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
 The Simple::SAX::Serializer::Parser module is free software. You may distribute under the terms of
 either the GNU General Public License or the Artistic License, as specified in

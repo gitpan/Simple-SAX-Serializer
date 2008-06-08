@@ -4,7 +4,7 @@ use warnings;
 use strict;
 use vars qw($VERSION);
 
-$VERSION = 0.03;
+$VERSION = 0.05;
 
 use Abstract::Meta::Class ':all';
 use base 'XML::SAX::Base';
@@ -69,7 +69,7 @@ has '%.handlers' => (item_accessor => 'handler');
 =over
 
 
-=item parse_sting
+=item parse_string
 
 Runs the parser and returns result, xml as string 
 
@@ -136,6 +136,7 @@ sub find_handlder {
         last if $handler;
     }
  
+    
     $handler = $handlers->{'*'}
         unless $handler;
 
@@ -163,7 +164,7 @@ __END__
 
 =back
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
 
 The Simple::SAX::Serializer module is free software. You may distribute under the terms of
 either the GNU General Public License or the Artistic License, as specified in

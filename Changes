@@ -1,5 +1,10 @@
 Revision history for Perl extension Simple::SAX::Serializer.
 
+0.05  Sun Jun 08 2008
+    - added example 
+    - fix dist
+    - add pod tests
+
 0.04  Sun May 18 2008
     - added Simple::SAX::Serializer::Handler::hash_of_array_handler method.
     - added Simple::SAX::Serializer::Parser::root_args method.
